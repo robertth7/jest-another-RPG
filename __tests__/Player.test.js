@@ -40,3 +40,34 @@ test('gets inventory from player or returns false', () => {
 
 // on player creation, the inventory should already have something in it, so a call to player.getInventory() should return an array
 // there's also the case of an empty inventory needing to return false. you can simulate an empty array yourself by setting player.inventory = [] before the next expect() runs. 
+
+test("gets player's health value", () => {
+    const player = new Player('Dave');
+
+    expect(player.getHealth()).toEqual(expect.stringContaining(player.health.toString()));
+});
+
+// test to check 'is alive'
+test('checks if player is alive or not', () => {
+    const player = new Player('Dave');
+
+    expect(player.isAlive()).toBeTruthy();
+
+    player.health = 0;
+
+    expect(player.isAlive()).toBeFalsy();
+});
+
+// test 'reduceHealth()' method to see if the correct amount of health is being subtracted from the Player health property
+test("subtracts from player's health", () => {
+    const player = new Player('Dave');
+    const oldHealth = player.health;
+
+    player.reduceHealth(5);
+
+    expect(player.health).toBe(oldHealth -5);
+
+    player.reduceHealth(99999);
+
+    expect(player.health).toBe(0);
+});
