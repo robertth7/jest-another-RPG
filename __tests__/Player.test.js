@@ -71,3 +71,39 @@ test("subtracts from player's health", () => {
 
     expect(player.health).toBe(0);
 });
+
+// player's attack value
+test("gets player's attack value", () => {
+    const player = new Player('Dave');
+    player.strength = 10;
+
+    expect(player.getAttackValue()).toBeGreaterThanOrEqual(5);
+    expect(player.getAttackValue()).toBeLessThanOrEqual(15);
+});
+// as mentioned previously, it is hard to test for randomness within a range. in this case, we don't opt to check for ANY number bc the test will be too general to give specific feedback for a failing test.
+// specificity will give the test more value and actionable feedback. 
+
+test('adds a potion to the inventory', () => {
+    const player = new Player('Dave');
+    const oldCount = player.inventory.length;
+
+    player.addPotion(new Potion());
+
+    expect(player.inventory.length).toBeGreaterThan(oldCount);
+});
+
+
+// Potions are a little different bc we'll need to handle updating the Player inventory as well as their stats.
+// when a Player drinks a Potion, the potion needs to be removed from their inventory and their stats need to be adjusted
+
+// we will need to write test that ensure that usePotion() removes the correct Potion from the Player inventory. 
+test('uses a potion from inventory', () => {
+    const player = new Player('Dave');
+    player.inventory = [new Potion(), new Potion(), new Potion()];
+    const oldCount = player.inventory.length;
+
+    player.usePotion(1);
+
+    expect(player.inventory.length).toBeLessThan(oldCount);
+});
+// again, we are keeping track of the old inventory length so that we can make sure the length decreases and doesn't go below zero. 
